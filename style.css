@@ -1,0 +1,26 @@
+body{
+    background: linear-gradient( skyblue, lightgreen);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+h1{
+    color: purple;
+    text-align: center;
+}
+.navbar{
+    display: flex;
+    border: 2px inset black;
+    justify-content: space-evenly;
+}
+
+a{
+    text-decoration: none;
+    color: royalblue;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+
+
+
