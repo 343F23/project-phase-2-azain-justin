@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/stresschecker.css">
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
     <header>
 
-        <H1>Welcome to Stress tester</H1>
+        <H1>Welcome to Stress Tester</H1>
         <nav class="navbar">
                 <a href="index.html">Home</a>
                 <a href="about.html" target="_blank">About us</a>
@@ -18,28 +19,36 @@
                 <a href="#contacts">Contact</a>
         </nav>
 
+        <p>
+            Stress Tester uses the Perceived Stress Scale to score your stress between 0 and 40, with 40 being the highest. A score between 0 and 13 means you have low stress, 14-26 is moderate stress, and 27-40 is high stress.
+        </p>
+        <p>For more information, read: <a href= "https://www.das.nh.gov/wellness/docs/percieved%20stress%20scale.pdf" target="_blank">offiial govenmrent website for accurate information</a></p>
+
     </header>
 
     <main>
         <form method = "get" action = "process.php" class = "form">
             <fieldset>
-                <label>In the last month, how often have you been upset because of something that happened unexpectedly?</label>
-                <p class = "stress">
-                    <input type="radio" name="q1" value="5">Never<br>
-                    <input type="radio" name="q1" value="1">Almost never<br>
-                    <input type="radio" name="q1" value="2">Sometimes<br>
-                    <input type="radio" name="q1" value="3">Fairly often<br>
-                    <input type="radio" name="q1" value="4">Very often<br>
-                </p>
-                <label>In the last month, how often have you felt that you were unable to control the important things in your life?</label>
-                <p class = "stress">
-                    <input type="radio" name="q2" value="5">Never<br>
-                    <input type="radio" name="q2" value="1">Almost never<br>
-                    <input type="radio" name="q2" value="2">Sometimes<br>
-                    <input type="radio" name="q2" value="3">Fairly often<br>
-                    <input type="radio" name="q2" value="4">Very often<br>
-                </p>                
-                <label>In the last month, how often have you felt nervous and stressed?</label>
+                <ol>
+                <li><label>In the last month, how often have you been upset because of something that happened unexpectedly?</label>
+                    <p class = "stress">
+                        <input type="radio" name="q1" value="5">Never<br>
+                        <input type="radio" name="q1" value="1">Almost never<br>
+                        <input type="radio" name="q1" value="2">Sometimes<br>
+                        <input type="radio" name="q1" value="3">Fairly often<br>
+                        <input type="radio" name="q1" value="4">Very often<br>
+                    </p>
+                </li>
+                <li><label>In the last month, how often have you felt that you were unable to control the important things in your life?</label>
+                    <p class = "stress">
+                        <input type="radio" name="q2" value="5">Never<br>
+                        <input type="radio" name="q2" value="1">Almost never<br>
+                        <input type="radio" name="q2" value="2">Sometimes<br>
+                        <input type="radio" name="q2" value="3">Fairly often<br>
+                        <input type="radio" name="q2" value="4">Very often<br>
+                    </p>  
+                </li>              
+                <li><label>In the last month, how often have you felt nervous and stressed?</label>
                 <p class = "stress">
                     <input type="radio" name="q3" value="5">Never<br>
                     <input type="radio" name="q3" value="1">Almost never<br>
@@ -47,7 +56,8 @@
                     <input type="radio" name="q3" value="3">Fairly often<br>
                     <input type="radio" name="q3" value="4">Very often<br>
                 </p>
-                <label>In the last month, how often have you felt confident about your ability to handle your personal problems?</label>
+            </li>              
+                <li><label>In the last month, how often have you felt confident about your ability to handle your personal problems?</label>
                 <p class = "stress">
                     <input type="radio" name="q4" value="5">Never<br>
                     <input type="radio" name="q4" value="1">Almost never<br>
@@ -55,7 +65,8 @@
                     <input type="radio" name="q4" value="3">Fairly often<br>
                     <input type="radio" name="q4" value="4">Very often<br>
                 </p>
-                <label>In the last month, how often have you felt that things were going your way?</label>
+            </li>
+                <li><label>In the last month, how often have you felt that things were going your way?</label>
                 <p class = "stress">
                     <input type="radio" name="q5" value="5">Never<br>
                     <input type="radio" name="q5" value="1">Almost never<br>
@@ -63,7 +74,8 @@
                     <input type="radio" name="q5" value="3">Fairly often<br>
                     <input type="radio" name="q5" value="4">Very often<br>
                 </p>
-                <label>In the last month, how often have you found that you could not cope with all the things that you had to do?</label>
+                </li>
+                <li><label>In the last month, how often have you found that you could not cope with all the things that you had to do?</label>
                 <p class = "stress">
                     <input type="radio" name="q6" value="5">Never<br>
                     <input type="radio" name="q6" value="1">Almost never<br>
@@ -71,7 +83,8 @@
                     <input type="radio" name="q6" value="3">Fairly often<br>
                     <input type="radio" name="q6" value="4">Very often<br>
                 </p>
-                <label>In the last month, how often have you been able to control irritations in your life?</label>
+                </li>
+                <li><label>In the last month, how often have you been able to control irritations in your life?</label>
                 <p class = "stress">
                     <input type="radio" name="q7" value="5">Never<br>
                     <input type="radio" name="q7" value="1">Almost never<br>
@@ -79,7 +92,8 @@
                     <input type="radio" name="q7" value="3">Fairly often<br>
                     <input type="radio" name="q7" value="4">Very often<br>
                 </p>
-                <label>In the last month, how often have you felt that you were on top of things?</label>
+                </li>
+                <li><label>In the last month, how often have you felt that you were on top of things?</label>
                 <p class = "stress">
                     <input type="radio" name="q8" value="5">Never<br>
                     <input type="radio" name="q8" value="1">Almost never<br>
@@ -87,7 +101,8 @@
                     <input type="radio" name="q8" value="3">Fairly often<br>
                     <input type="radio" name="q8" value="4">Very often<br>
                 </p>
-                <label>In the last month, how often have you been angered because of things that happened that were outside of your control?</label>
+                </li>
+                <li><label>In the last month, how often have you been angered because of things that happened that were outside of your control?</label>
                 <p class = "stress">
                     <input type="radio" name="q9" value="5">Never<br>
                     <input type="radio" name="q9" value="1">Almost never<br>
@@ -95,7 +110,8 @@
                     <input type="radio" name="q9" value="3">Fairly often<br>
                     <input type="radio" name="q9" value="4">Very often<br>
                 </p>
-                <label>In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?</label>
+                </li>
+                <li><label>In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?</label>
                 <p class = "stress">
                     <input type="radio" name="q10" value="5">Never<br>
                     <input type="radio" name="q10" value="1">Almost never<br>
@@ -103,6 +119,8 @@
                     <input type="radio" name="q10" value="3">Fairly often<br>
                     <input type="radio" name="q10" value="4">Very often<br>
                 </p>
+                </li>
+                </ol>
 
                 <input type = "submit">
             </fieldset>

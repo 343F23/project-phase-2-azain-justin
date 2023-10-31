@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bmi.css">
+
+
 </head>
 <body>
     <header>
@@ -19,20 +22,27 @@
         </nav>
 
     </header>
+    
+    <div id = image>
+        <img src="images/Bmi-chart.jpg" alt = "bmi chart">
+    </div>
 
     <main>
         <form method = "get" action = "process.php" class = "form">
             <fieldset>
                 <p class = 'height'>
-                    <label>Height: </label>
-                    <input class = "foot" type = "number" min = "0" max = "10" name = "foot" /> ft
-                    <input class = "inch" type = "number" min = "0" max = "11" name = "inch" /> in
+                    <label for class = "foot">Height: </label>
+                    <input id = "foot" class = "foot" type = "number" min = "0" max = "10" name = "foot"> ft
+                    <input class = "inch" type = "number" min = "0" max = "11" name = "inch"> in
                 </p>
                 <label>Weight: </label>
-                <input class = "weight" type = "number" min = "1" max = "1000" name = "weight" /> pounds<br>
-                <input type = "submit">
+                <input class = "weight" type = "number" min = "1" max = "1000" name = "weight"> pounds<br>
+                <br>
+                <button type = "submit">Submit</button><br>
             </fieldset>
         </form>
+        <br>
+        
         <p class = "resultScreen"></p>
     </main>
 

@@ -2,15 +2,27 @@
 body{
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    height: 100vh;
     background: linear-gradient(gold,rgb(86, 62, 147));
     background-repeat: no-repeat;
     background-attachment: fixed;
+
+}
+
+body p {
+    display: inline;
 }
 
 h1{
     color: purple;
     text-align: center;
+    font-family: sans-serif;
+}
+
+
+main, footer {
+    font-family: serif;
 }
 
 .navbar{
@@ -23,18 +35,16 @@ a{
     text-decoration: none;
     color: royalblue;
     padding-top: 3px;
-    padding-bottom: 3px;
+    padding-bottom:3px;
 }
-
   
 #contacts{
-    margin-top: 25%;
     width: 100%;
     display: flex;
     border: 2px inset black;
     flex-direction: column;
     padding-bottom: 0px;
-    max-height: 100px;
+    max-height: 150px;
     justify-content: end;
     padding-left: 5px;
     
@@ -48,8 +58,3 @@ a{
 #contacts a {
     color: black;
 }
-
-
-
-
-

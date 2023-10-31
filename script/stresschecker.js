@@ -62,6 +62,7 @@ for (let j = 0; j < stressArray.length; j++) {
         });
     }
 }
+// EXPLAIN THE RESULTS BASED ON THEIR SCORE (low stress? high stress?)
 
 
 form.addEventListener('submit', (ev) => { 
