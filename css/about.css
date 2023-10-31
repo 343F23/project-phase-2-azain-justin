@@ -1,0 +1,19 @@
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background: linear-gradient(gold,rgb(86, 62, 147));
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+h1{
+    color: purple;
+}
+
+main p{
+
+    color: black;
+
+}
