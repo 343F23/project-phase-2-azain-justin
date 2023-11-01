@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Healthy Lifestyle</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bmi.css">
 
@@ -12,13 +12,12 @@
 <body>
     <header>
 
-        <H1>Welcome to BMI checker</H1>
+        <H1>Welcome to BMI Checker</H1>
         <nav class="navbar">
-                <a href="index.html">Home</a>
-                <a href="about.html" target="_blank">About us</a>
-                <a href="report.html" target="_blank">Project report</a>
-                <a href="index.html">Products</a>
-                <a href="#contacts">Contact</a>
+            <a href="index.html">Home</a>
+            <a href="about.html" target="_blank">About us</a>
+            <a href="index.html">Products</a>
+            <a href="#contacts">Contact</a>
         </nav>
 
     </header>
@@ -30,15 +29,17 @@
     <main>
         <form method = "get" action = "process.php" class = "form">
             <fieldset>
-                <p class = 'height'>
-                    <label for class = "foot">Height: </label>
-                    <input id = "foot" class = "foot" type = "number" min = "0" max = "10" name = "foot"> ft
-                    <input class = "inch" type = "number" min = "0" max = "11" name = "inch"> in
-                </p>
-                <label>Weight: </label>
-                <input class = "weight" type = "number" min = "1" max = "1000" name = "weight"> pounds<br>
-                <br>
-                <button type = "submit">Submit</button><br>
+                <legend>Calculate BMI:</legend>
+                    <input id = "ft" class = "foot" type = "number" min = "0" max = "10" name = "foot">
+                    <label for = "ft">ft</label>
+                    <input id = "in" class = "inch" type = "number" min = "0" max = "11" name = "inch">
+                    <label for = "in">in</label>
+                    <br><br>
+                    Weight:
+                <input id = "pounds" class = "weight" type = "number" min = "1" max = "1000" name = "weight">
+                <label for = "pounds">pounds</label>
+                <br><br>
+                <button type = "submit">See Results</button><br>
             </fieldset>
         </form>
         <br>
@@ -50,10 +51,10 @@
     <footer>
 
         <div id="contacts">
-            <p>If you experience any difficulties with website</p>
-            <p>CONTACT:</p>
+            <p>If you experience any difficulties with website
+            <br>CONTACT:</p>
             <a href="mailto:irfan2mx@dukes.jmu.edu"><strong>Azain</strong></a>
-            <a href="mailto:irfan2mx@dukes.jmu.edu"><strong>Justin</strong></a>
+            <a href="mailto:bryan2jw@dukes.jmu.edu"><strong>Justin</strong></a>
         </div>
 
     </footer>

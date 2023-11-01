@@ -10,6 +10,14 @@ body{
 
 }
 
+/* Sets the navbar to wrap when there isn't enough space */
+@media only screen and (max-width: 850px) {
+    /* For mobile phones: */
+    .navbar {
+        flex-flow: wrap;
+    }
+  }
+
 body p {
     display: inline;
 }

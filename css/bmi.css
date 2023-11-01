@@ -19,3 +19,12 @@ img {
     height: 350px;
     max-width: 600px;
 }
+
+/* Changes the size of the image when it exceeds the screen size */
+@media only screen and (max-width: 600px) {
+    /* For mobile phones: */
+    img {
+        height: 100%;
+        max-width: 100%;
+    }
+  }

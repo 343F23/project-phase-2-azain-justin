@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Healthy Lifestyle</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
 
-        <H1>Welcome to age predictor</H1>
+        <H1>Welcome to Age Predictor</H1>
         <nav class="navbar">
                 <a href="index.html">Home</a>
                 <a href="about.html" target="_blank">About us</a>
-                <a href="report.html" target="_blank">Project report</a>
                 <a href="index.html">Products</a>
                 <a href="#contacts">Contact</a>
         </nav>
@@ -23,31 +22,47 @@
     <main>
         <form method = "get" action = "process.php" class = "form">
             <fieldset>
-                <label>How would you describe your level of stress?</label>
+                <legend>Predict your age:</legend>
+                <br>How would you describe your level of stress?<br>
                 <p class = "stress">
-                    <input type="radio" name="stress" value="1">No stress<br>
-                    <input type="radio" name="stress" value="2">A little stress<br>
-                    <input type="radio" name="stress" value="3">Moderate amount of stress<br>
-                    <input type="radio" name="stress" value="4">Very stressed<br>
+                    <input id = "no_stress" type="radio" name="stress" value="1">
+                    <label for = "no_stress">No stress<br></label>
+                    <input id = "little" type="radio" name="stress" value="2">
+                    <label for = "little">A little stressed<br></label>
+                    <input id = "moderate" type="radio" name="stress" value="3">
+                    <label for = "moderate">Moderate amount of stress<br></label>
+                    <input id = "very" type="radio" name="stress" value="4">
+                    <label for = "very">Very stressed<br></label>
+                    <br>
                 </p>
-                <label>What is your sex?</label>
+                What is your sex?<br>
                 <p class = "sex">
-                    <input type="radio" name="sex" value="1">Female<br>
-                    <input type="radio" name="sex" value="2">Male<br>
-                    <input type="radio" name="sex" value="3">Neither / Prefer not to say<br>
+                    <input id = "female" type="radio" name="sex" value="1">
+                    <label for = "female">Female<br></label>
+                    <input id = "male" type="radio" name="sex" value="2">
+                    <label for = "male">Male<br></label>
+                    <input id = "na" type="radio" name="sex" value="3">
+                    <label for = "na">Neither / Prefer not to say<br></label>
+                    <br>
                 </p>
-                <label>How old are you?</label>
                 <p>
-                <input class = "age" type = "number" min = "0" max = "100" name = "age" />
+                How old are you?
+                <input id = "years" class = "age" type = "number" min = "0" max = "100" name = "age">
+                <label for = "years"> years<br><br></label>
                 </p>
-                <label>How often do you consume alcohol?</label>
+                How often do you consume alcohol?<br>
                 <p class = "alcohol">
-                    <input type="radio" name="alcohol" value="1">I don't drink aloholic beverages<br>
-                    <input type="radio" name="alcohol" value="2">Once a week<br>
-                    <input type="radio" name="alcohol" value="3">Every few days<br>
-                    <input type="radio" name="alcohol" value="4">Every day<br>
+                    <input id = "no_alcohol" type="radio" name="alcohol" value="1">
+                    <label for = "no_alcohol">I don't drink aloholic beverages<br></label>
+                    <input id = "week" type="radio" name="alcohol" value="2">
+                    <label for = "week">Once a week<br></label>
+                    <input id = "few_days" type="radio" name="alcohol" value="3">
+                    <label for = "few_days">Every few days<br></label>
+                    <input id = "day" type="radio" name="alcohol" value="4">
+                    <label for = "day">Every day<br></label>
+                    <br>
                 </p>
-                <button type = "submit">Submit</button>
+                <button type = "submit">See Results</button><br>
             </fieldset>
         </form>
         <p class = "resultScreen"></p>
@@ -56,10 +71,10 @@
     <footer>
 
         <div id="contacts">
-            <p>If you experience any difficulties with website</p>
-            <p>CONTACT:</p>
+            <p>If you experience any difficulties with website
+            CONTACT:</p>
             <a href="mailto:irfan2mx@dukes.jmu.edu"><strong>Azain</strong></a>
-            <a href="mailto:irfan2mx@dukes.jmu.edu"><strong>Justin</strong></a>
+            <a href="mailto:bryan2jw@dukes.jmu.edu"><strong>Justin</strong></a>
         </div>
 
     </footer>
