@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Navigation bar and page heading-->
     <header>
-
         <H1>Welcome to Age Predictor</H1>
         <nav class="navbar">
                 <a href="index.html">Home</a>
@@ -20,6 +20,7 @@
     </header>
 
     <main>
+        <!-- Initializes the form, adding label text for the various questions, inputs, and the fieldset -->
         <form method = "get" action = "process.php" class = "form">
             <fieldset>
                 <legend>Predict your age:</legend>
@@ -62,12 +63,15 @@
                     <label for = "day">Every day<br></label>
                     <br>
                 </p>
+                <!-- Sends the results of the form and prompts the calculation and display of the results -->
                 <button type = "submit">See Results</button><br>
             </fieldset>
         </form>
+        <!-- The object to be replaced with the results - initially empty -->
         <p class = "resultScreen"></p>
     </main>
 
+    <!-- Contact Information -->
     <footer>
 
         <div id="contacts">
@@ -78,6 +82,8 @@
         </div>
 
     </footer>
+
+    <!-- Link to .js file that makes the form functional -->
     <script src="script/agepredictor.js"></script>
 </body>
 </html>

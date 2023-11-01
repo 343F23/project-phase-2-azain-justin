@@ -1,4 +1,4 @@
-
+/* Affects the spacing on each page and the JMU-ified gradient pattern */
 body{
     display: flex;
     flex-direction: column;
@@ -22,30 +22,34 @@ body p {
     display: inline;
 }
 
+/* Font of heading text */
 h1{
     color: purple;
     text-align: center;
     font-family: sans-serif;
 }
 
-
+/* Font of non-heading text */
 main, footer {
     font-family: serif;
 }
 
+/* Spaces items in the navbar and draws outline */
 .navbar{
     display: flex;
     border: 2px inset black;
     justify-content: space-evenly;
 }
 
+/* Makes links blue according to convention */
 a{
     text-decoration: none;
     color: royalblue;
     padding-top: 3px;
     padding-bottom:3px;
 }
-  
+
+/* Manages spacing and outline of the contact information, located in the footer */  
 #contacts{
     width: 100%;
     display: flex;
@@ -58,11 +62,13 @@ a{
     
 }
 
+/* Affects text in contacts */
  #contacts p {
     margin: 0;
     padding-bottom: 3px;
 }
 
+/* Affects links in contacts */
 #contacts a {
     color: black;
 }

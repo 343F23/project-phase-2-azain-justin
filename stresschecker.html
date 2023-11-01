@@ -8,6 +8,7 @@
 
 </head>
 <body>
+    <!-- Navigation bar and page heading, and some introductory text -->
     <header>
 
         <H1>Welcome to Stress Checker</H1>
@@ -19,13 +20,14 @@
         </nav>
 
         <p><br>
-            Stress Tester uses the Perceived Stress Scale to score your stress between 0 and 40, with 40 being the highest. A score between 0 and 13 means you have low stress, 14-26 is moderate stress, and 27-40 is high stress.
+            Stress Checker uses the Perceived Stress Scale to score your stress between 0 and 40, with 40 being the highest. A score between 0 and 13 means you have low stress, 14-26 is moderate stress, and 27-40 is high stress.
         </p>
         <p>For more information, read this  <a href= "https://en.wikipedia.org/wiki/Perceived_Stress_Scale" target="_blank">Wikipedia page</a><br><br></p>
 
     </header>
 
     <main>
+        <!-- Initializes the form, adding label text for the various questions, inputs, and the fieldset -->
         <form method = "get" action = "process.php" class = "form">
             <fieldset>
                 <legend>Get your Perceived Stress Score:</legend>
@@ -172,14 +174,16 @@
                 </li>
                 </ol>
 
+                <!-- Sends the results of the form and prompts the calculation and display of the results -->
                 <button type = "submit">See Results</button><br>
             </fieldset>
         </form>
+        <!-- The object to be replaced with the results - initially empty -->
         <p class = "resultScreen"></p>
        
     </main>
 
-
+    <!-- Contact Information -->
     <footer>
 
         <div id="contacts">
@@ -190,6 +194,8 @@
         </div>
 
     </footer>
+
+    <!-- Link to .js file that makes the form functional -->
     <script src="script/stresschecker.js"></script>
 </body>
 </html>

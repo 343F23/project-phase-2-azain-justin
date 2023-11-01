@@ -1,8 +1,9 @@
+/* Makes size of text on the form larger than usual for stylistic purposes */
 body {
     font-size:x-large;
 }
 
-
+/* Centers the img element in this container */
 #image {
     display: flex;
     flex-direction: row;
@@ -10,11 +11,12 @@ body {
     height: fit-content;
 }
 
-
+/* Affects spacing of results and form */
 .resultScreen {
     padding-top: 3vh;
 }
 
+/* Controls image size to fit the page */
 img {
     height: 350px;
     max-width: 600px;
