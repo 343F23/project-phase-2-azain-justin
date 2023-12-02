@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      </script>
+  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Healthy Lifestyle</title>
+
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/stresschecker.css">
 
 </head>
 <body>
@@ -180,6 +187,18 @@
         </form>
         <!-- The object to be replaced with the results - initially empty -->
         <p class = "resultScreen"></p>
+
+        <div id = spectrum>
+            <canvas id = "answer"></canvas>   
+            <canvas id = "canvas"></canvas>   
+        </div>
+        <div id = "storageStuff">
+            <div id = "graphButtons">
+                <button type = "submit" id = "graph">Toggle Graph</button>
+                <button id = "clear" type = "submit">Clear All Previous Results</button>
+            </div>
+            <div id = "scatter"></div>
+        </div>
        
     </main>
 

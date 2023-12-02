@@ -1,0 +1,22 @@
+
+
+#spectrum {
+    width:80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+#storageStuff {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
+#graphButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
