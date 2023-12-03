@@ -186,12 +186,20 @@
             </fieldset>
         </form>
         <!-- The object to be replaced with the results - initially empty -->
-        <p class = "resultScreen"></p>
-
-        <div id = spectrum>
-            <canvas id = "answer"></canvas>   
-            <canvas id = "canvas"></canvas>   
+        <div class = response>
+            <div class = results>
+                <p class = "resultScreen"></p>
+                <p class = "stressLevel"></p>
+                <p class = "trend"></p>
+                <p class = "levelChange"></p>
+            </div>
+    
+            <div id = spectrum>
+                <canvas id = "answer"></canvas>   
+                <canvas id = "canvas"></canvas>   
+            </div>
         </div>
+
         <div id = "storageStuff">
             <div id = "graphButtons">
                 <button type = "submit" id = "graph">Toggle Graph</button>

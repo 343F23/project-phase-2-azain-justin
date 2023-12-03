@@ -4,7 +4,13 @@ const scatter = document.getElementById("scatter");
 const resultScreen = document.querySelector('.resultScreen')
 const clear = document.getElementById("clear");
 const graph = document.getElementById("graph");
+const key = "STR"   // separate items from this page from others
 let result = 0;
+
+// coonstants for output text based on results
+const good = "Your stress levels are well under control. You've done a good job managing your stress. Whatever you're doing, keep it up!";
+const moderate = "Your stress levels are normal, but not ideal. You've done a good job managing your stress, but consider ways you can adjust your workload. Also, consider how others may help reduce your stress.";
+const bad = "Your stress levels are higher than average. Living with high stress for long periods of time can have severe health consequences. Start taking steps to maintain a better work-life balance, and seeing which social connections are causing you the most harm.";
 
 const q1 = document.querySelectorAll('input[name=q1]')
 const q2 = document.querySelectorAll('input[name=q2]')
@@ -33,18 +39,19 @@ let valArray = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
 
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
-
 function drawChart(result) {
 
     var data = google.visualization.arrayToDataTable([
-        [{label: 'Date', type: "date"}, {label:'Weight', type:"number"}] 
+        [{label: 'Date', type: "date"}, {label:'Stress Score', type:"number"}] 
         ]);
 
     for (let i = 0; i < localStorage.length; i++) {
-        let string = localStorage.getItem(i);
-        let list = string.substring(1, string.length - 1).split(")");
-        console.log(list[0] + ")");
-        data.addRow([new Date(Date.parse(list[0] + ")")), Number(list[1])]);
+        let string = localStorage.getItem(i + key);
+        if (string != null) {
+            let list = string.substring(1, string.length - 1).split(")");
+            data.addRow([new Date(Date.parse(list[0] + ")")), Number(list[1])]);
+        }
+
     }
 
     var options = {
@@ -60,10 +67,8 @@ function drawChart(result) {
         legend: 'none',
     };
 
-    var chart = new google.visualization.LineChart(document.getElementById('scatter'));
+    var chart = new google.visualization.LineChart(scatter);
     chart.draw(data, options);
-
-
 
 
     // clear local storage if button is pressed, resetting values to their defaults
@@ -77,13 +82,14 @@ function drawChart(result) {
         data = google.visualization.arrayToDataTable([
             [{label: 'Date', type: "date"}, {label:'Weight', type:"number"}] 
             ]);
-
+        
         clear.style.visibility = "hidden";
         graph.style.visibility = "hidden";
         scatter.style.visibility = "hidden";
         canvas.style.visibility = "hidden";
         answer.style.visibility = "hidden";
         canvas.style.height = "0px";
+        spectrum.style.height = "0px"
         answer.style.height = "0px";
 
         const resultScreen = document.querySelector('.resultScreen');
@@ -117,7 +123,11 @@ canvas.width = 1000;
 let size = 2;
 
 function resize() {
-    console.log("got here");
+    if (this.window.innerWidth <= 800) {
+        scatter.style.width = "400px";
+    } else {
+        scatter.style.width = "800px";
+    }
     if (this.window.innerWidth <= 630) {
         canvas.width = 500;
         answer.width = 333;
@@ -133,11 +143,18 @@ function resize() {
     }
 }
 
+
+
 resize();
 
 window.addEventListener('resize', (event) => {
+
     resize();
+    drawChart();
+
 } );
+
+spectrum.style.height = "0px";
 
 function drawSpectrum() {
     shape.beginPath();
@@ -236,15 +253,51 @@ form.addEventListener('submit', (ev) => {
     result = 0;
     valArray.forEach((element) => result = result + element);
     const resultScreen = document.querySelector('.resultScreen');
+    const stressLevel = document.querySelector('.stressLevel');
+    const trend = document.querySelector('.trend');
+    const levelChange = document.querySelector('.levelChange');
+
+    if (result < 14) {
+        stressLevel.textContent = good;
+    } else if (result < 27) {
+        stressLevel.textContent = moderate;
+    } else stressLevel.textContent = high;
+
+    let string = localStorage.getItem(localStorage.length - 1);
+
+    if (string != null) {
+        let list = string.substring(1, string.length - 1).split(")");
+        let lastResult = Number(list[1]);
+        if (lastResult != 0 && result != 0) {
+            if (result < lastResult) {
+                trend.textContent = "Your stress levels have decreased by " + 
+                                    Math.round(((lastResult / result) - 1) * 100) + "% since you last" +
+                                    " took this test (previous score of " + lastResult+ ").";
+            } else if (result > lastResult) {
+                trend.textContent = "Your stress levels have increased by " + 
+                Math.round(((result / lastResult) - 1) * 100) + "% since you last" +
+                " took this test (previous score of " + lastResult+ ").";
+            } else {
+                trend.textContent = "Your stress levels have not changed since you last took this test.";
+            }  
+        }
+  
+    }
+
+
     const output = document.createElement("output");
+
+
     output.classList.add('resultScreen');
     const textNode = document.createTextNode("Your stress score is " + result + ".");
     output.appendChild(textNode);
     resultScreen.parentNode.replaceChild(output, resultScreen);
+
+
     resize();
 
     // save to local storage
-    localStorage.setItem(localStorage.length, JSON.stringify(new Date() + result));
+    localStorage.setItem(localStorage.length + key, JSON.stringify(new Date() + result));
 
     if (toggle) {
         drawChart();
@@ -257,13 +310,15 @@ form.addEventListener('submit', (ev) => {
     ev.preventDefault();
 
 });
+clear.style.visibility = "hidden";
 
 // create and show graph
 graph.addEventListener("click", function (ev) {
     if (localStorage.length == 0) return;
     console.log("got here");
     if (toggle) {
-        console.log("toggle was true");
+        scatter.style.height = "0px";
+
         clear.style.visibility = "hidden";
         scatter.style.visibility = "hidden";
         toggle = false;

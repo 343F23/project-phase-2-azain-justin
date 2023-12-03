@@ -12,7 +12,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-
+    margin-bottom: 50px;
 }
 
 #graphButtons {
@@ -20,3 +20,24 @@
     flex-direction: column;
     justify-content: center;
 }
+.response {
+    margin-top: 50px;
+}
+.results>p {
+    display: block;
+}
+
+@media only screen and (max-width: 800px) {
+    /* For mobile phones: */
+    .response {
+        display: flex;
+        flex-direction: column;
+    }
+  }
+  @media only screen and (min-width: 801px) {
+    /* For computer screens: */
+    .response {
+        display: flex;
+        flex-direction: row;
+    }
+  }

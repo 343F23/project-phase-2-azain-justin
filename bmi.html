@@ -6,6 +6,8 @@
     <title>Healthy Lifestyle</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bmi.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 
 
 </head>
@@ -31,7 +33,7 @@
         <form method = "get" action = "process.php" class = "form">
             <fieldset>
                 <legend>Calculate BMI:</legend>
-                    <input id = "ft" class = "foot" type = "number" min = "0" max = "10" name = "foot">
+                    <input id = "ft" class = "foot" type = "number" min = "1" max = "10" name = "foot">
                     <label for = "ft">ft</label>
                     <input id = "in" class = "inch" type = "number" min = "0" max = "11" name = "inch">
                     <label for = "in">in</label>
@@ -48,6 +50,14 @@
 
         <!-- The object to be replaced with the results - initially empty -->
         <p class = "resultScreen"></p>
+
+        <div id = "storageStuff">
+            <div id = "graphButtons">
+                <button type = "submit" id = "graph">Toggle Graph</button>
+                <button id = "clear" type = "submit">Clear All Previous Results</button>
+            </div>
+            <div id = "scatter"></div>
+        </div>
     </main>
 
 

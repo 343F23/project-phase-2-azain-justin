@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <title>Healthy Lifestyle</title>
     
     <link rel="stylesheet" href="css/style.css">
@@ -26,6 +28,10 @@
 
     <!-- A list of the products on offer, with linkes to each of them and explanatory text -->
     <main>
+    <div id = randGraph>
+        <p id = "graphText"></p>
+        <div id = scatter></div>
+    </div>
     <h2>Products</h2>
        <dl id="products">
         <dt><a href="bmi.html" target="_blank"><strong>BMI Calculator</strong></a></dt>
@@ -36,6 +42,9 @@
         <dd>Want to know a rough estimate of your age. click the link</dd>
        </dl>
     </main>
+
+    <script src = "script/script.js"></script>
+
 
     <!-- Contact Information -->
     <footer>
