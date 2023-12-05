@@ -1,8 +1,8 @@
 // enable the random selection of a graph to display
 const scatter = document.getElementById("scatter");
-const keyArray = ["BMI", "STR"];
-const titleArray = ["Your BMI Over Time", "Your Stress Score Over Time"];
-const labelArray = ["BMI", "Stress Score"];
+const keyArray = ["BMI", "STR", "AGE"];
+const titleArray = ["Your BMI Over Time", "Your Stress Score Over Time", "Your Predicted Lifespan Over Time"];
+const labelArray = ["BMI", "Stress Score", "Predicted Lifespan"];
 const randElement = Math.floor(Math.random() * keyArray.length);
 const key = keyArray[randElement];
 const title = titleArray[randElement];
@@ -14,7 +14,6 @@ google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
-
 
     var data = google.visualization.arrayToDataTable([
         [{label: 'Date', type: "date"}, {label: label, type:"number"}] 
@@ -62,4 +61,5 @@ window.addEventListener('resize', (event) => {
     drawChart();
 
 } );
+
 resize();

@@ -1,63 +1,20 @@
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
-
-function drawChart(result) {
-  var data = google.visualization.arrayToDataTable([
-    [{label: 'Date', type: "date"}, {label:'Predicted Age', type:"number"}],
-
-  ]);
-
-  var options = {
-
-    title: 'Your Predicted Age Over Time',
-    hAxis: {format: 'M/d/yy', title: 'Date', format: 'M/d/yy',
-            gridlines: {color: "transparent"},
-            minorGridlines: {
-                color:"none"
-              }
-    },
-    vAxis: {format: '0', title: 'Predicted Age', minValue: 0},
-    pointSize: 10,
-    colors: ['Black'],
-    legend: 'none',
-  };
-
-  
-
-var chart = new google.visualization.LineChart(document.getElementById('scatter'));
-
-function updateChart (result) {
-    
-    var date = new Date();
-    data.addRow([date, result]);
-    chart.draw(data, options);
-
-}
-
-document.getElementById('scatter').style.visibility = "hidden";
-
-
-form.addEventListener('submit', (ev) => { 
-    result = stressVal + sexVal + alcVal - ageVal;
-    scatter.style.height = "400px";
-    updateChart(result);
-    scatter.style.visibility = "visible";
-    ev.preventDefault();
-
-});
-}
-
-
-
+// constants for html elements
 const form = document.querySelector('.form');
+const scatter = document.getElementById("scatter");
+const resultScreen = document.querySelector('.resultScreen');
+const clear = document.getElementById("clear");
+const graph = document.getElementById("graph");
+const key = "AGE";   // separate items from this page from others
+const title = "Your Predicted Lifespan Over Time";
+const label = "Predicted Lifespan";
+let result = 0;
+
 const stress = document.querySelectorAll('input[name=stress]')
 const sex = document.querySelectorAll('input[name=sex]')
 const age = document.querySelector('.age')
 const alcohol = document.querySelectorAll('input[name=alcohol]')
 const improve = document.getElementById("improve");
 
-const resultScreen = document.querySelector('.resultScreen')
-var result = 0;
 var stressVal = 0;
 var sexVal = 76;
 var ageVal = 0;
@@ -73,6 +30,92 @@ const ageArray = [
     sex,
     alcohol
 ];
+
+// unchecks all radio buttons
+function resetQuiz() {
+    ageArray.forEach((element) => element.forEach((option) => option.checked = false));
+    stressVal = 0;
+    sexVal = 76;
+    alcVal = 0;
+    ageVal = 0;
+    var result = 0;
+}
+// for "toggle graph button"
+var toggle = false;
+
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart(result) {
+  var data = google.visualization.arrayToDataTable([
+    [{label: 'Date', type: "date"}, {label:label, type:"number"}],
+
+  ]);
+
+  for (let i = 0; i < localStorage.length; i++) {
+    let string = localStorage.getItem(i + key);
+    if (string != null) {
+        let list = string.substring(1, string.length - 1).split(")");
+        data.addRow([new Date(Date.parse(list[0] + ")")), Number(list[1])]);
+    }
+
+    }
+
+  var options = {
+
+    title: title,
+    hAxis: {format: 'M/d/yy', title: "Date", format: 'M/d/yy',
+            gridlines: {color: "transparent"},
+            minorGridlines: {
+                color:"none"
+              }
+    },
+    vAxis: {format: '0', title: label, minValue: 0},
+    pointSize: 10,
+    colors: ['Black'],
+    legend: 'none',
+  };
+
+  
+
+var chart = new google.visualization.LineChart(scatter);
+chart.draw(data, options);
+
+
+  // clear local storage if button is pressed, resetting values to their defaults
+  clear.addEventListener("click", function (ev) {
+    scatter.style.height = "0px";
+    
+    localStorage.clear();
+    chart.clearChart();
+    resetQuiz();
+
+    data = google.visualization.arrayToDataTable([
+        [{label: 'Date', type: "date"}, {label:'Weight', type:"number"}] 
+        ]);
+    
+    
+    
+    clear.style.visibility = "hidden";
+    graph.style.visibility = "hidden";
+    scatter.style.visibility = "hidden";
+    const resultScreen = document.querySelector('.resultScreen');
+    const output = document.createElement("output");
+    output.classList.add('resultScreen');
+    const textNode = document.createTextNode("");
+    output.appendChild(textNode);
+    resultScreen.parentNode.replaceChild(output, resultScreen);
+    toggle = false;
+
+    ev.preventDefault();
+});
+
+}
+resetQuiz();
+scatter.style.visibility = "hidden";
+
+
+
 
 ageArray.forEach((element) => element.forEach((option) => option.checked = false));
 age.value = 0;
@@ -124,40 +167,86 @@ for (let i = 0; i < alcohol.length; i++) {
 }
 
 
-
 form.addEventListener('submit', (ev) => { 
     console.log('submitted');
     ageVal = age.value;
     const result = stressVal + sexVal + alcVal - ageVal;
-    console.log(result);
-    const resultScreen = document.querySelector('.resultScreen')
+    scatter.style.height = "400px";
+    scatter.style.visibility = "visible";    const resultScreen = document.querySelector('.resultScreen')
     const output = document.createElement("output");
     output.classList.add('resultScreen')
     const textNode = document.createTextNode("You have approximately " + result + " years to live.\n");
     output.appendChild(textNode);
     resultScreen.parentNode.replaceChild(output, resultScreen);
     
-    improve.innerHTML = "";
-    let vals = [stressVal, alcVal];
-    console.log("got here");
-    let count = 0;
-    let temp = "";
-        for (let j = 0; j < 2; j++) {
-            if (vals[j] == Math.max(...vals)) {
-                console.log(vals[j]);
-                let tip = document.createElement("li");
-                let msg = document.createElement("p");
-                msg.textContent = tips[j];
-                console.log(msg);
-                tip.appendChild(msg);
-                console.log(tip);
-                improve.appendChild(tip);
-                count += 1;
-                
-            }
+    if (isNaN(result)) {
+        textNode.textContent = "Please enter a numerical value in each field."
+    } else {
+        // save to local storage
+        localStorage.setItem(localStorage.length + key, JSON.stringify(new Date() + result));
+    }
+
+    let vals = [stressVal, alcVal ];
+    for (let i = 0; i < vals.length; i++) {
+        if (vals[i] == Math.max(...vals)) {
+            console.log(vals[i]);
+            let tip = document.createElement("li");
+            let msg = document.createElement("p");
+            msg.textContent = "To improve, consider " + tips[i];
+            console.log(msg);
+            tip.appendChild(msg);
+            improve.appendChild(tip);
+            
         }
+    }
+
+        graph.style.visibility = "visible";
+    if (toggle) {
+        drawChart();
+    }
     
     ev.preventDefault();
 
 });
 
+resetQuiz();
+
+// graph stuff
+
+clear.style.visibility = "hidden";
+
+// create and show graph
+graph.addEventListener("click", function (ev) {
+    if (localStorage.length == 0) return;
+    if (toggle) {
+        scatter.style.height = "0px";
+
+        clear.style.visibility = "hidden";
+        scatter.style.visibility = "hidden";
+        toggle = false;
+        return;
+    }
+    scatter.style.height = "400px";
+    drawChart();
+    clear.style.visibility = "visible";
+    scatter.style.visibility = "visible";
+    toggle = true;
+    ev.preventDefault();
+});
+
+resize();
+
+function resize() {
+    if (window.innerWidth <= 800) {
+        scatter.style.width = "400px";
+    } else {
+        scatter.style.width = "800px";
+    }
+}
+
+
+window.addEventListener('resize', (event) => {
+    resize();
+    drawChart();
+
+} );
