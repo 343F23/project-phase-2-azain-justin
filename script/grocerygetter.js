@@ -111,10 +111,10 @@ function getGif(name, card) {
 }
 const search = document.getElementById("search");
 search.value = "";
+const div = document.createElement("div");
+div.id = "apiStuff";
+document.getElementById("apiStuff").replaceWith(div);
 search.addEventListener("change", function(e) {
-    // if (e == 13) {
-        getArticles(search.value);
-    // }
-
+    getArticles(search.value);
     e.preventDefault();
 });
