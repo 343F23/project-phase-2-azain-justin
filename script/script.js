@@ -7,7 +7,7 @@ const randElement = Math.floor(Math.random() * keyArray.length);
 const key = keyArray[randElement];
 const title = titleArray[randElement];
 const label = labelArray[randElement];
-
+const apiStuff = document.getElementById("apiStuff");
 
 
 google.charts.load('current', {'packages':['corechart']});
@@ -63,3 +63,5 @@ window.addEventListener('resize', (event) => {
 } );
 
 resize();
+
+
