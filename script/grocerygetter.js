@@ -2,7 +2,7 @@
 
 const myImage = document.createElement("img");
 
-
+// first api call (get food)
 function getArticles(search) {
 
     const div = document.createElement("div");
@@ -109,8 +109,8 @@ function getGif(name, card) {
 
     })
 }
-const search = document.getElementById("search");
 search.value = "";
+const search = document.getElementById("search");
 const div = document.createElement("div");
 div.id = "apiStuff";
 document.getElementById("apiStuff").replaceWith(div);

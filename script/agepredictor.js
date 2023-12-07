@@ -4,32 +4,40 @@ const scatter = document.getElementById("scatter");
 const resultScreen = document.querySelector('.resultScreen');
 const clear = document.getElementById("clear");
 const graph = document.getElementById("graph");
-const key = "AGE";   // separate items from this page from others
+
+// graph-related constants
+const key = "AGE";   // separate items from this page from others in localStorage
 const title = "Your Predicted Lifespan Over Time";
 const label = "Predicted Lifespan";
-let result = 0;
 
+// Each question is assigned its own constant
 const stress = document.querySelectorAll('input[name=stress]')
 const sex = document.querySelectorAll('input[name=sex]')
 const age = document.querySelector('.age')
 const alcohol = document.querySelectorAll('input[name=alcohol]')
-const improve = document.getElementById("improve");
 
+// Array of tips to pull from based on the element most negatively affecting the score
+const tips = [
+    "taking measures to decrease your stress",
+    "lowering your alcohol intake"
+];
+
+// array of questions with radio buttons
+const ageArray = [
+stress,
+sex,
+alcohol
+];
+
+// Store results of each question and initializze overall score
 var stressVal = 0;
 var sexVal = 76;
 var ageVal = 0;
 var alcVal = 0;
+var result = 0;
 
-const tips = [
-            "Take measures to decrease your stress",
-            "Lower your alcohol intake"
-];
-
-const ageArray = [
-    stress,
-    sex,
-    alcohol
-];
+// for "toggle graph button"
+var toggle = false;
 
 // unchecks all radio buttons
 function resetQuiz() {
@@ -40,85 +48,94 @@ function resetQuiz() {
     ageVal = 0;
     var result = 0;
 }
-// for "toggle graph button"
-var toggle = false;
 
+// resize the graphs for mobile phones
+function resize() {
+    if (window.innerWidth <= 800) {
+        scatter.style.width = "400px";
+    } else {
+        scatter.style.width = "800px";
+    }
+}
+
+// import packages necessary for graphing
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 
+// draws the chart based on elements in localStorage
 function drawChart(result) {
-  var data = google.visualization.arrayToDataTable([
+    var data = google.visualization.arrayToDataTable([
     [{label: 'Date', type: "date"}, {label:label, type:"number"}],
 
-  ]);
-
-  for (let i = 0; i < localStorage.length; i++) {
-    let string = localStorage.getItem(i + key);
-    if (string != null) {
-        let list = string.substring(1, string.length - 1).split(")");
-        data.addRow([new Date(Date.parse(list[0] + ")")), Number(list[1])]);
+    ]);
+    /* pulls each element of a given key, starting from the 
+    earliest result chronologically (left to right) */
+    for (let i = 0; i < localStorage.length; i++) {
+        let string = localStorage.getItem(i + key); 
+        if (string != null) {   // don't try to add a null element
+            let list = string.substring(1, string.length - 1).split(")");
+            data.addRow([new Date(Date.parse(list[0] + ")")), Number(list[1])]);
+        }
     }
+    // aesthetics and proper labels
+    var options = {
+        title: title,
+        hAxis: {format: 'M/d/yy', title: "Date", format: 'M/d/yy',
+                gridlines: {color: "transparent"},
+                minorGridlines: { color:"none" }
+        },
+        vAxis: {format: '0', title: label, minValue: 0},
+        pointSize: 10,
+        colors: ['Black'],
+        legend: 'none',
+    };
 
-    }
-
-  var options = {
-
-    title: title,
-    hAxis: {format: 'M/d/yy', title: "Date", format: 'M/d/yy',
-            gridlines: {color: "transparent"},
-            minorGridlines: {
-                color:"none"
-              }
-    },
-    vAxis: {format: '0', title: label, minValue: 0},
-    pointSize: 10,
-    colors: ['Black'],
-    legend: 'none',
-  };
-
-  
-
-var chart = new google.visualization.LineChart(scatter);
-chart.draw(data, options);
+    var chart = new google.visualization.LineChart(scatter);
+    chart.draw(data, options);
 
 
-  // clear local storage if button is pressed, resetting values to their defaults
-  clear.addEventListener("click", function (ev) {
-    scatter.style.height = "0px";
-    
-    localStorage.clear();
-    chart.clearChart();
-    resetQuiz();
+    // clear local storage if button is pressed, resetting values to their defaults
+    clear.addEventListener("click", function (ev) {
+        // eliminate any empty space on page
+        scatter.style.height = "0px";
+        
+        // clears localStorage, deletes graph, and deletes quiz results
+        localStorage.clear();
+        chart.clearChart();
+        resetQuiz();
 
-    data = google.visualization.arrayToDataTable([
-        [{label: 'Date', type: "date"}, {label:'Weight', type:"number"}] 
-        ]);
-    
-    
-    
-    clear.style.visibility = "hidden";
-    graph.style.visibility = "hidden";
-    scatter.style.visibility = "hidden";
-    const resultScreen = document.querySelector('.resultScreen');
-    const output = document.createElement("output");
-    output.classList.add('resultScreen');
-    const textNode = document.createTextNode("");
-    output.appendChild(textNode);
-    resultScreen.parentNode.replaceChild(output, resultScreen);
-    toggle = false;
+        /* redefine data so it doesn't conflict with its initialization
+        when another graph is made */
+        data = google.visualization.arrayToDataTable([
+            [{label: 'Date', type: "date"}, {label: label, type:"number"}] ]);
+        // hide graph-related elements
+        clear.style.visibility = "hidden";
+        graph.style.visibility = "hidden";
+        scatter.style.visibility = "hidden";
 
-    ev.preventDefault();
+        // reset the results shown (no results exist at this point)
+        const resultScreen = document.querySelector('.resultScreen');
+        const output = document.createElement("div");
+        output.classList.add('resultScreen');
+        const textNode = document.createTextNode("");
+        output.appendChild(textNode);
+        resultScreen.parentNode.replaceChild(output, resultScreen);
+        let improve = document.createElement("p");
+        improve.id = "improve";
+        document.getElementById("improve").replaceWith(improve)
+        // graph is "toggled" off despite not pressing the toggle button
+        toggle = false;
+
+        ev.preventDefault();
 });
 
 }
-resetQuiz();
-scatter.style.visibility = "hidden";
 
+window.addEventListener('resize', (event) => {
+    resize();
+    drawChart();
 
-
-
-ageArray.forEach((element) => element.forEach((option) => option.checked = false));
-age.value = 0;
+} );
 
 for (let i = 0; i < stress.length; i++) {
     stress[i].addEventListener("change", 
@@ -166,14 +183,13 @@ for (let i = 0; i < alcohol.length; i++) {
     });
 }
 
-
+// show results and save result to localStorage
 form.addEventListener('submit', (ev) => { 
-    console.log('submitted');
+    // calculate and display results
     ageVal = age.value;
-    const result = stressVal + sexVal + alcVal - ageVal;
-    scatter.style.height = "400px";
-    scatter.style.visibility = "visible";    const resultScreen = document.querySelector('.resultScreen')
-    const output = document.createElement("output");
+    const result = stressVal + sexVal + alcVal - ageVal; 
+    const resultScreen = document.querySelector('.resultScreen')
+    const output = document.createElement("div");
     output.classList.add('resultScreen')
     const textNode = document.createTextNode("You have approximately " + result + " years to live.\n");
     output.appendChild(textNode);
@@ -186,36 +202,33 @@ form.addEventListener('submit', (ev) => {
         localStorage.setItem(localStorage.length + key, JSON.stringify(new Date() + result));
     }
 
+    // reveal graph and clear buttons in case clear button was pressed beforehand
+    graph.style.visibility = "visible";
+    clear.style.visibility = "visible";
+
+    // show tip based on quiz results
     let vals = [stressVal, alcVal ];
     for (let i = 0; i < vals.length; i++) {
-        if (vals[i] == Math.max(...vals)) {
-            console.log(vals[i]);
-            let tip = document.createElement("li");
+        if (vals[i] == Math.min(...vals)) {
             let msg = document.createElement("p");
             msg.textContent = "To improve, consider " + tips[i];
-            console.log(msg);
-            tip.appendChild(msg);
-            improve.appendChild(tip);
+            msg.id = "improve"
+            document.getElementById("improve").replaceWith(msg);
             
         }
     }
-
-        graph.style.visibility = "visible";
     if (toggle) {
-        drawChart();
+        // graph stuff
+        scatter.style.height = "400px";
+        scatter.style.visibility = "visible";   
+        drawChart();    
     }
-    
+
     ev.preventDefault();
 
 });
 
-resetQuiz();
-
-// graph stuff
-
-clear.style.visibility = "hidden";
-
-// create and show graph
+// toggle graph visibility
 graph.addEventListener("click", function (ev) {
     if (localStorage.length == 0) return;
     if (toggle) {
@@ -235,18 +248,10 @@ graph.addEventListener("click", function (ev) {
 });
 
 resize();
+resetQuiz();
+scatter.style.visibility = "hidden";
 
-function resize() {
-    if (window.innerWidth <= 800) {
-        scatter.style.width = "400px";
-    } else {
-        scatter.style.width = "800px";
-    }
-}
-
-
-window.addEventListener('resize', (event) => {
-    resize();
-    drawChart();
-
-} );
+ageArray.forEach((element) => element.forEach((option) => option.checked = false));
+age.value = 0;
+resetQuiz();
+clear.style.visibility = "hidden";

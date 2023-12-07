@@ -1,5 +1,4 @@
 const form = document.querySelector('.form');
-
 const foot = document.querySelector('.foot')
 const inch = document.querySelector('.inch')
 const weight = document.querySelector('.weight')
@@ -89,9 +88,11 @@ function drawChart(result) {
     });
 }
 
+// reset quiz results
 resetQuiz();
 scatter.style.visibility = "hidden";
 
+// show bmi on submit
 form.addEventListener('submit', (ev) => { 
     footVal = Number(foot.value * 12);
     inchVal = Number(inch.value);

@@ -5,13 +5,13 @@ const resultScreen = document.querySelector('.resultScreen')
 const clear = document.getElementById("clear");
 const graph = document.getElementById("graph");
 const key = "STR"   // separate items from this page from others
-let result = 0;
 
 // coonstants for output text based on results
 const good = "Your stress levels are well under control. You've done a good job managing your stress. Whatever you're doing, keep it up!";
 const moderate = "Your stress levels are normal, but not ideal. You've done a good job managing your stress, but consider ways you can adjust your workload. Also, consider how others may help reduce your stress.";
 const bad = "Your stress levels are higher than average. Living with high stress for long periods of time can have severe health consequences. Start taking steps to maintain a better work-life balance, and seeing which social connections are causing you the most harm.";
 
+// one constant for each question
 const q1 = document.querySelectorAll('input[name=q1]')
 const q2 = document.querySelectorAll('input[name=q2]')
 const q3 = document.querySelectorAll('input[name=q3]')
@@ -26,102 +26,30 @@ const q10 = document.querySelectorAll('input[name=q10]')
 // array of all questions used to calculate results
 const stressArray = [ q1, q2, q3, q4, q5, q6, q7, q8, q9,q10 ];
 
+// for "toggle graph button"
+var toggle = false;
+let result = 0;
+
+// hold score for each question
+let valArray = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
+
+// spectrum-related variables
+let answer = document.getElementById("answer");
+let canvas = document.getElementById("canvas");
+let size = 2;
+const spectrum = document.getElementById("spectrum");
+const shape = canvas.getContext("2d");
+const arrow = answer.getContext("2d");
+const ctx = answer.getContext("2d");
+
 // unchecks all radio buttons
 function resetQuiz() {
     stressArray.forEach((element) => element.forEach((option) => option.checked = false));
     for (let i = 0; i < valArray.length; i++) valArray[i] = 0;
     var result = 0;
 }
-// for "toggle graph button"
-var toggle = false;
-result = 0;
-let valArray = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
 
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
-function drawChart(result) {
-
-    var data = google.visualization.arrayToDataTable([
-        [{label: 'Date', type: "date"}, {label:'Stress Score', type:"number"}] 
-        ]);
-
-    for (let i = 0; i < localStorage.length; i++) {
-        let string = localStorage.getItem(i + key);
-        if (string != null) {
-            let list = string.substring(1, string.length - 1).split(")");
-            data.addRow([new Date(Date.parse(list[0] + ")")), Number(list[1])]);
-        }
-
-    }
-
-    var options = {
-        title: 'Your Stress Score Over Time',
-        hAxis: {
-                format: 'M/d/yy', title: 'Date', format: 'M/d/yy',
-                gridlines: { color: "transparent" },
-                minorGridlines: { color:"none" } 
-            },
-        vAxis: {format: '0', title: 'Stress Score', minValue: 0},
-        pointSize: 10,
-        colors: ['Black'],
-        legend: 'none',
-    };
-
-    var chart = new google.visualization.LineChart(scatter);
-    chart.draw(data, options);
-
-
-    // clear local storage if button is pressed, resetting values to their defaults
-    clear.addEventListener("click", function (ev) {
-        scatter.style.height = "0px";
-        
-        localStorage.clear();
-        chart.clearChart();
-        resetQuiz();
-
-        data = google.visualization.arrayToDataTable([
-            [{label: 'Date', type: "date"}, {label:'Weight', type:"number"}] 
-            ]);
-        
-        clear.style.visibility = "hidden";
-        graph.style.visibility = "hidden";
-        scatter.style.visibility = "hidden";
-        canvas.style.visibility = "hidden";
-        answer.style.visibility = "hidden";
-        canvas.style.height = "0px";
-        spectrum.style.height = "0px"
-        answer.style.height = "0px";
-
-        const resultScreen = document.querySelector('.resultScreen');
-        const output = document.createElement("output");
-        output.classList.add('resultScreen');
-        const textNode = document.createTextNode("");
-        output.appendChild(textNode);
-        resultScreen.parentNode.replaceChild(output, resultScreen);
-        toggle = false;
-        ev.preventDefault();
-    });
-}
-
-resetQuiz();
-scatter.style.visibility = "hidden";
-
-
-const spectrum = document.getElementById("spectrum");
-let answer = document.getElementById("answer")
-let canvas = document.getElementById("canvas");
-
-const shape = canvas.getContext("2d");
-const arrow = answer.getContext("2d");
-const ctx = answer.getContext("2d");
-
-spectrum.style.height = "0px";
-canvas.style.height = "0px";
-answer.style.height = "0px";
-canvas.width = 1000;
-
-let size = 2;
-
+// resizes the graph container and visualization based on the current width
 function resize() {
     if (this.window.innerWidth <= 800) {
         scatter.style.width = "400px";
@@ -143,19 +71,87 @@ function resize() {
     }
 }
 
+// import packages necessary for graphing
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// draws the chart based on elements in localStorage
+function drawChart(result) {
+    var data = google.visualization.arrayToDataTable([
+        [{label: 'Date', type: "date"}, {label:'Stress Score', type:"number"}] 
+        ]);
+
+    /* pulls each element of a given key, starting from the 
+    earliest result chronologically (left to right) */
+    for (let i = 0; i < localStorage.length; i++) {
+        let string = localStorage.getItem(i + key);
+        if (string != null) {   // don't try to add a null element
+            let list = string.substring(1, string.length - 1).split(")");
+            data.addRow([new Date(Date.parse(list[0] + ")")), Number(list[1])]);
+        }
+
+    }
+    // aesthetics and proper labels
+    var options = {
+        title: 'Your Stress Score Over Time',
+        hAxis: {
+                format: 'M/d/yy', title: 'Date', format: 'M/d/yy',
+                gridlines: { color: "transparent" },
+                minorGridlines: { color:"none" } 
+            },
+        vAxis: {format: '0', title: 'Stress Score', minValue: 0},
+        pointSize: 10,
+        colors: ['Black'],
+        legend: 'none',
+    };
+
+    // clear local storage if button is pressed, resetting values to their defaults
+    var chart = new google.visualization.LineChart(scatter);
+    chart.draw(data, options);
 
 
-resize();
+    // clear local storage if button is pressed, resetting values to their defaults
+    clear.addEventListener("click", function (ev) {
+        // eliminate any empty space on page
+        canvas.style.height = "0px";
+        spectrum.style.height = "0px"
+        answer.style.height = "0px";
+        scatter.style.height = "0px";
+        
+        // clears localStorage, deletes graph, and deletes quiz results
+        localStorage.clear();
+        chart.clearChart();
+        resetQuiz();
 
-window.addEventListener('resize', (event) => {
+        /* redefine data so it doesn't conflict with its initialization
+        when another graph is made */
+        data = google.visualization.arrayToDataTable([
+            [{label: 'Date', type: "date"}, {label:'Weight', type:"number"}] 
+            ]);
+        // hide graph-related elements and visualization
+        clear.style.visibility = "hidden";
+        graph.style.visibility = "hidden";
+        scatter.style.visibility = "hidden";
+        canvas.style.visibility = "hidden";
+        answer.style.visibility = "hidden";
 
-    resize();
-    drawChart();
+        // reset the results shown (no results exist at this point)
+        const resultScreen = document.querySelector('.resultScreen');
+        const output = document.createElement("output");
+        output.classList.add('resultScreen');
+        const textNode = document.createTextNode("");
+        output.appendChild(textNode);
+        resultScreen.parentNode.replaceChild(output, resultScreen);
+        document.querySelector('.stressLevel').textContent = "";
+        document.querySelector('.trend').textContent = "";
 
-} );
+        // graph is off
+        toggle = false;
+        ev.preventDefault();
+    });
+}
 
-spectrum.style.height = "0px";
-
+// draws the spectrum that visualizes stress score, shows good versus bad results
 function drawSpectrum() {
     shape.beginPath();
     shape.moveTo(12.25 * size, 25);
@@ -193,14 +189,6 @@ function drawSpectrum() {
     shape.fill();
 }
 
-
-canvas.style.visibility = "hidden";
-
-// default size
-answer.width = 666;
-answer.height = 150;
-console.log(answer.height);
-
 function updateArrow(result) {
     arrow.beginPath();
     arrow.moveTo((17.5 + result * 7.1) * size , 150);
@@ -226,6 +214,13 @@ function updateArrow(result) {
 
 }
 
+
+// redraw the graph and spectrum based on the window size
+window.addEventListener('resize', (event) => {
+    resize();
+    drawChart();
+} );
+
 for (let j = 0; j < stressArray.length; j++) {
     stress = stressArray[j];
     for (let i = 0; i < stress.length; i++) {
@@ -246,25 +241,36 @@ for (let j = 0; j < stressArray.length; j++) {
         });
     }
 }
-// EXPLAIN THE RESULTS BASED ON THEIR SCORE (low stress? high stress?)
 
-form.addEventListener('submit', (ev) => { 
-    console.log('submitted');
-    result = 0;
-    valArray.forEach((element) => result = result + element);
+// calculate quiz, results, save to localStorage, decide whether to update graph
+form.addEventListener('submit', (ev) => {
+    // output-related constants
     const resultScreen = document.querySelector('.resultScreen');
+    const output = document.createElement("output");
     const stressLevel = document.querySelector('.stressLevel');
     const trend = document.querySelector('.trend');
-    const levelChange = document.querySelector('.levelChange');
 
+    // stores previous stress result
+    let string = "";
+    let i = localStorage.length - 1;
+    while (string == "" && i >= 0) {
+        string = localStorage.getItem(i + key);
+        i--;
+    }
+    console.log(string);
+
+    // calculate result for all 10 questions
+    result = 0;
+    valArray.forEach((element) => result = result + element);
+
+    // label stress as good, moderate, or high
     if (result < 14) {
         stressLevel.textContent = good;
     } else if (result < 27) {
         stressLevel.textContent = moderate;
     } else stressLevel.textContent = high;
 
-    let string = localStorage.getItem(localStorage.length - 1);
-
+    // guage improvement (or the opposite)
     if (string != null) {
         let list = string.substring(1, string.length - 1).split(")");
         let lastResult = Number(list[1]);
@@ -279,30 +285,29 @@ form.addEventListener('submit', (ev) => {
                 " took this test (previous score of " + lastResult+ ").";
             } else {
                 trend.textContent = "Your stress levels have not changed since you last took this test.";
-            }  
+            }
         }
-  
     }
 
-
-    const output = document.createElement("output");
-
-
+    // print stress score
     output.classList.add('resultScreen');
     const textNode = document.createTextNode("Your stress score is " + result + ".");
     output.appendChild(textNode);
     resultScreen.parentNode.replaceChild(output, resultScreen);
-
 
     resize();
 
     // save to local storage
     localStorage.setItem(localStorage.length + key, JSON.stringify(new Date() + result));
 
+    // update graph if needed
     if (toggle) {
+        scatter.style.height = "400px";
+        scatter.style.visibility = "visible";   
         drawChart();
     }
     updateArrow(result);
+
     canvas.style.visibility = "visible";
     answer.style.visibility = "visible";
     graph.style.visibility = "visible";
@@ -310,7 +315,6 @@ form.addEventListener('submit', (ev) => {
     ev.preventDefault();
 
 });
-clear.style.visibility = "hidden";
 
 // create and show graph
 graph.addEventListener("click", function (ev) {
@@ -333,3 +337,19 @@ graph.addEventListener("click", function (ev) {
     ev.preventDefault();
 });
 
+/* no visualizations upon page load and
+undo any quiz work */
+scatter.style.visibility = "hidden";
+canvas.style.visibility = "hidden";
+spectrum.style.visibility = "hidden";
+canvas.width = 1000;
+resetQuiz();
+resize();
+spectrum.style.height = "0px";
+canvas.style.height = "0px";
+answer.style.height = "0px";
+// default size
+answer.width = 666;
+answer.height = 150;
+
+clear.style.visibility = "hidden";
