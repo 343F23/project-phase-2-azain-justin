@@ -62,6 +62,19 @@ window.addEventListener('resize', (event) => {
 
 } );
 
+
 resize();
 
-
+// save results as JSON when link is clicked
+var data = new Array();
+for (let i = 0; i < localStorage.length - 1; i++){
+    data.push(localStorage.getItem(localStorage.key(i)));
+}
+console.log(data);
+let blob = new Blob([JSON.stringify(data)], {type: "text/plain;charset=utf-8"});    
+const filename = 'hlresults.json';
+let link = document.getElementById('download');
+var url = window.URL || window.webkitURL;
+link.setAttribute('href', url.createObjectURL(blob) );
+link.setAttribute('download', filename);
+document.querySelector("main").appendChild(link);
