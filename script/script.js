@@ -67,7 +67,7 @@ resize();
 
 // save results as JSON when link is clicked
 var data = new Array();
-for (let i = 0; i < localStorage.length - 1; i++){
+for (let i = 0; i < localStorage.length; i++){
     data.push(localStorage.getItem(localStorage.key(i)));
 }
 console.log(data);
