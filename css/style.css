@@ -3,6 +3,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 20px;
     height: 100vh;
     background: linear-gradient(gold,rgb(86, 62, 147));
     background-repeat: no-repeat;
@@ -23,7 +24,7 @@ body p {
 }
 
 /* Font of heading text */
-h1{
+header H1{
     color: purple;
     text-align: center;
     font-family: sans-serif;
@@ -35,10 +36,10 @@ main, footer {
 }
 
 /* Spaces items in the navbar and draws outline */
-.navbar{
+header .navbar{
     display: flex;
     border: 2px inset black;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 
 /* Makes links blue according to convention */
@@ -48,6 +49,8 @@ a{
     padding-top: 3px;
     padding-bottom:3px;
 }
+
+
 
 /* Manages spacing and outline of the contact information, located in the footer */  
 #contacts{
@@ -72,3 +75,4 @@ a{
 #contacts a {
     color: black;
 }
+

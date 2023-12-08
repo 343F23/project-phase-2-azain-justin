@@ -1,6 +1,6 @@
 /* Makes size of text on the form larger than usual for stylistic purposes */
 body {
-    font-size:x-large;
+    font-size: large;
 }
 
 /* Centers the img element in this container */
@@ -18,7 +18,7 @@ body {
 
 /* Controls image size to fit the page */
 img {
-    height: 350px;
+    height: 300px;
     max-width: 600px;
 }
 
