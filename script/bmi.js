@@ -58,14 +58,15 @@ function drawChart(result) {
     var chart = new google.visualization.LineChart(document.getElementById('scatter'));
     chart.draw(data, options);
 
-
-
-
     // clear local storage if button is pressed, resetting values to their defaults
     clear.addEventListener("click", function (ev) {
         scatter.style.height = "0px";
         
-        localStorage.clear();
+        // only delete items for this page
+        for (let i = 0; i < localStorage.length; i++) {
+            localStorage.removeItem(i + key);
+        }
+
         chart.clearChart();
         resetQuiz();
 
@@ -116,8 +117,13 @@ form.addEventListener('submit', (ev) => {
 
     graph.style.visibility = "visible";
     if (toggle) {
-        drawChart();
+        // graph stuff
+        scatter.style.height = "400px";
+        scatter.style.visibility = "visible";   
     }
+
+    // update graph
+    drawChart();  
     console.log("got here 2");
     ev.preventDefault();
 

@@ -15,18 +15,21 @@ const stress = document.querySelectorAll('input[name=stress]')
 const sex = document.querySelectorAll('input[name=sex]')
 const age = document.querySelector('.age')
 const alcohol = document.querySelectorAll('input[name=alcohol]')
+const healthy = document.querySelectorAll('input[name=healthy]')
 
 // Array of tips to pull from based on the element most negatively affecting the score
 const tips = [
     "taking measures to decrease your stress",
-    "lowering your alcohol intake"
+    "lowering your alcohol intake",
+    "maintaining a healthier diet"
 ];
 
 // array of questions with radio buttons
 const ageArray = [
 stress,
 sex,
-alcohol
+alcohol,
+healthy
 ];
 
 // Store results of each question and initializze overall score
@@ -34,6 +37,7 @@ var stressVal = 0;
 var sexVal = 76;
 var ageVal = 0;
 var alcVal = 0;
+var eatVal = 0;
 var result = 0;
 
 // for "toggle graph button"
@@ -46,6 +50,7 @@ function resetQuiz() {
     sexVal = 76;
     alcVal = 0;
     ageVal = 0;
+    eatVal = 0;
     var result = 0;
 }
 
@@ -99,8 +104,12 @@ function drawChart(result) {
         // eliminate any empty space on page
         scatter.style.height = "0px";
         
-        // clears localStorage, deletes graph, and deletes quiz results
-        localStorage.clear();
+        // clears localStorage of this page's elements, 
+        // deletes graph, and deletes quiz results
+        for (let i = 0; i < localStorage.length; i++) {
+            localStorage.removeItem(i + key);
+        }
+
         chart.clearChart();
         resetQuiz();
 
@@ -144,11 +153,11 @@ for (let i = 0; i < stress.length; i++) {
         if (choice == "1") {
             stressVal = 0;
         } else if (choice == "2") {
-            stressVal = -3;
-        } else if (choice == "3") {
             stressVal = -5;
-        } else if (choice == "4") {
+        } else if (choice == "3") {
             stressVal = -10;
+        } else if (choice == "4") {
+            stressVal = -20;
         }
     });
 }
@@ -183,18 +192,33 @@ for (let i = 0; i < alcohol.length; i++) {
     });
 }
 
+for (let i = 0; i < healthy.length; i++) {
+    healthy[i].addEventListener("change", 
+    function (e) {
+        let choice = e.target.value
+        if (choice == "1") {
+            eatVal = 0;
+        } else if (choice == "2") {
+            eatVal = -5;
+        } else if (choice == "3") {
+            eatVal = -7;
+        } else if (choice == "4") {
+            eatVal = -10;
+        }
+    });
+}
+
 // show results and save result to localStorage
 form.addEventListener('submit', (ev) => { 
     // calculate and display results
     ageVal = age.value;
-    const result = stressVal + sexVal + alcVal - ageVal; 
+    const result = stressVal + sexVal + alcVal + eatVal - ageVal; 
     const resultScreen = document.querySelector('.resultScreen')
     const output = document.createElement("div");
     output.classList.add('resultScreen')
     const textNode = document.createTextNode("You have approximately " + result + " years to live.\n");
     output.appendChild(textNode);
     resultScreen.parentNode.replaceChild(output, resultScreen);
-    
     if (isNaN(result)) {
         textNode.textContent = "Please enter a numerical value in each field."
     } else {
@@ -207,9 +231,9 @@ form.addEventListener('submit', (ev) => {
     clear.style.visibility = "visible";
 
     // show tip based on quiz results
-    let vals = [stressVal, alcVal ];
+    let vals = [stressVal, alcVal, eatVal ];
     for (let i = 0; i < vals.length; i++) {
-        if (vals[i] == Math.min(...vals)) {
+        if (vals[i] == Math.min(...vals) && vals[i] < -5) {
             let msg = document.createElement("p");
             msg.textContent = "To improve, consider " + tips[i];
             msg.id = "improve"
@@ -221,8 +245,10 @@ form.addEventListener('submit', (ev) => {
         // graph stuff
         scatter.style.height = "400px";
         scatter.style.visibility = "visible";   
-        drawChart();    
     }
+
+    // update graph
+    drawChart();    
 
     ev.preventDefault();
 
@@ -230,7 +256,6 @@ form.addEventListener('submit', (ev) => {
 
 // toggle graph visibility
 graph.addEventListener("click", function (ev) {
-    if (localStorage.length == 0) return;
     if (toggle) {
         scatter.style.height = "0px";
 
@@ -249,6 +274,7 @@ graph.addEventListener("click", function (ev) {
 
 resize();
 resetQuiz();
+scatter.style.height = "0px";
 scatter.style.visibility = "hidden";
 
 ageArray.forEach((element) => element.forEach((option) => option.checked = false));

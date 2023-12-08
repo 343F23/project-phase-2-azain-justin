@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Healthy Lifestyle</title>
-    <link rel="stylesheet" href="css/agepredictor.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/agepredictor.css">
+
 
     <script src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
@@ -16,7 +17,7 @@
         <nav class="navbar">
                 <a href="index.html">Home</a>
                 <a href="about.html" target="_blank">About us</a>
-                <a href="index.html">Products</a>
+                <a href="index.html#products">Products</a>
                 <a href="#contacts">Contact</a>
         </nav>
 
@@ -66,6 +67,18 @@
                     <label for = "day">Every day<br></label>
                     <br>
                 </p>
+                What do you usually eat?<br>
+                <p class = "healthy">
+                    <input id = "balanced" type="radio" name="healthy" value="1">
+                    <label for = "balanced">I have a balanced diet with lots of vegetables<br></label>
+                    <input id = "sometimes" type="radio" name="healthy" value="2">
+                    <label for = "sometimes">I eat healthy, with the occasional desert<br></label>
+                    <input id = "mostly_unhealthy" type="radio" name="healthy" value="3">
+                    <label for = "mostly_unhealthy">I occasionally eat some sort of vegetable during a meal.<br></label>
+                    <input id = "no_veggies" type="radio" name="healthy" value="4">
+                    <label for = "no_veggies">I almosts always eat processed food, with little to no vegetables.<br></label>
+                    <br>
+                </p>
                 <!-- Sends the results of the form and prompts the calculation and display of the results -->
                 <button type = "submit">See Results</button><br>
             </fieldset>
@@ -73,7 +86,7 @@
         <!-- The object to be replaced with the results - initially empty -->
         <div class = "resultScreen">
         </div>
-        <p id = "improve"></p>
+        <p class = "improve" id = "improve"></p>
         <div id = "storageStuff">
             <div id = "graphButtons">
                 <button type = "submit" id = "graph">Toggle Graph</button>

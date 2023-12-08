@@ -1,5 +1,5 @@
 /* Affects the spacing on each page and the JMU-ified gradient pattern */
-body{
+body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -10,14 +10,6 @@ body{
     background-attachment: fixed;
 
 }
-
-/* Sets the navbar to wrap when there isn't enough space */
-@media only screen and (max-width: 850px) {
-    /* For mobile phones: */
-    .navbar {
-        flex-flow: wrap;
-    }
-  }
 
 body p {
     display: inline;
@@ -32,11 +24,12 @@ header H1{
 
 /* Font of non-heading text */
 main, footer {
-    font-family: serif;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 /* Spaces items in the navbar and draws outline */
 header .navbar{
+    background-color: #CBC3E3;
     display: flex;
     border: 2px inset black;
     justify-content: space-around;
@@ -76,3 +69,79 @@ a{
     color: black;
 }
 
+.list-group-mine .list-group-item {
+    background-color: #f1f9fb;
+    border-top: 1px solid #0091b5;
+    border-left-color: #fff;
+    border-right-color: #fff;
+  }
+  
+  .list-group .list-group-item:hover, button:hover {
+      background-color: lightyellow;
+  }
+  
+  .list-group .list-group-item, .card_body {
+      background-color: #CBC3E3;
+      height: 50px;
+  }
+  .list-group .list-group-item-action:active, #card {
+      background-color: #CBC3E3;
+  }
+  .list-group {
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+  
+  .product {
+      display: grid;
+      grid-template-columns: 400px 500px;
+  }
+  
+  .desc {
+      padding-left: 50px;
+  }
+
+/* Sets the navbar to wrap when there isn't enough space */
+@media only screen and (max-width: 900px) {
+    /* For mobile phones: */
+    .navbar {
+        flex-flow: wrap;
+    }
+    /*BELOW DOESN'T DO EVERYTHING IT'S SUPPOSED TO*/
+    .product {
+        display: flex;
+        width: 400px;
+        flex-direction: column;
+    }
+    .desc {
+        margin-top: 10px;
+    }
+    .list-group .list-group-item{
+        height: 50px;
+    }
+  }
+
+.download {
+   height: 30px;
+}
+#download {
+    font-size: 20px;
+}
+
+.resultScreen, #improve {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#storageStuff {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#graphButtons {
+    margin-bottom: 10px;
+}
+
+.navbar > a {
+    text-decoration: none;
+    color: purple;
+    font-weight: 600;
+}

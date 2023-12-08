@@ -118,8 +118,11 @@ function drawChart(result) {
         answer.style.height = "0px";
         scatter.style.height = "0px";
         
-        // clears localStorage, deletes graph, and deletes quiz results
-        localStorage.clear();
+        // clears localStorage of this page's elements,\
+        // deletes graph, and deletes quiz results
+        for (let i = 0; i < localStorage.length; i++) {
+            localStorage.removeItem(i + key);
+        };
         chart.clearChart();
         resetQuiz();
 
@@ -128,6 +131,7 @@ function drawChart(result) {
         data = google.visualization.arrayToDataTable([
             [{label: 'Date', type: "date"}, {label:'Weight', type:"number"}] 
             ]);
+
         // hide graph-related elements and visualization
         clear.style.visibility = "hidden";
         graph.style.visibility = "hidden";
@@ -304,8 +308,10 @@ form.addEventListener('submit', (ev) => {
     if (toggle) {
         scatter.style.height = "400px";
         scatter.style.visibility = "visible";   
-        drawChart();
     }
+
+    // update data visualizations
+    drawChart();
     updateArrow(result);
 
     canvas.style.visibility = "visible";
@@ -318,8 +324,6 @@ form.addEventListener('submit', (ev) => {
 
 // create and show graph
 graph.addEventListener("click", function (ev) {
-    if (localStorage.length == 0) return;
-    console.log("got here");
     if (toggle) {
         scatter.style.height = "0px";
 

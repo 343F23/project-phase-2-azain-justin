@@ -1,6 +1,8 @@
 
-
+// constants for easy access of HTML elements
 const myImage = document.createElement("img");
+const search = document.getElementById("search");
+const div = document.createElement("div");
 
 // first api call (get food)
 function getArticles(search) {
@@ -24,6 +26,7 @@ function getArticles(search) {
             let prev = "";
             console.log(data);
           data.hints.forEach(c => {
+            // initialize elements of card
             let card = document.createElement("div");
             let img = document.createElement("img");
             let gif = document.createElement("img");
@@ -42,17 +45,23 @@ function getArticles(search) {
             img.classList.add("card_image");
             name.classList.add("card_name");
             info.classList.add("card_info");
-            
+            button.classList.add("card_button");
+
             card.style.width = "18rem";
+            body.style.height = "70px";
             img.style.height = "10rem";
             gif.style.height = "10rem";
 
             name.textContent = c.food.label;
             let isGif = false;
+
+            // set image to the one from element
             if (c.food.image != null) {
                 img.src = c.food.image;
+                img.alt = "";
             }
             
+            // toggle between gif and image, if both options exist
             button.addEventListener("click", function (e) {
                 if (!isGif) {
                     getGif(name.textContent, card);
@@ -62,6 +71,7 @@ function getArticles(search) {
                     newImg.style.height = "10rem";
                     if (c.food.image != null) {
                         newImg.src = c.food.image;
+                        newImg.alt = "";
                     }
                     card.firstChild.replaceWith(newImg);
                     isGif = false;
@@ -77,13 +87,15 @@ function getArticles(search) {
                     body.appendChild(button);
                     card.appendChild(img);
                 } else {
+                    // use gif if element from response doesn't have image and 
+                    // don't include a toggle button
                     card.appendChild(gif);
                     getGif(c.food.label, card);
                 }
                 card.appendChild(body);
                 div.appendChild(card);
             }
-            
+            // don't diplay duplicate items
             prev = name.textContent;
           })
           });;
@@ -93,8 +105,10 @@ function getArticles(search) {
     }
 }
 
+// 2nd api call: searches giphy for a gif with the food name and replaces the 
+// image with a bootstrap card
 function getGif(name, card) {
-    const url = 'http://api.giphy.com/v1/gifs/translate?s=' + name + '&api_key=u1gkCum5AcQOtATyb6idz3lww8hJ4ZY2';
+    const url = 'http://api.giphy.com/v1/gifs/translate?rating=g&s=' + name + '&api_key=u1gkCum5AcQOtATyb6idz3lww8hJ4ZY2';
     const response = fetch(url)
     .then ((response) => response.json())
     .then(data => {
@@ -102,6 +116,7 @@ function getGif(name, card) {
         gif.classList.add("gif");
         let src = data.data.images.fixed_height.url
         gif.src = src;
+        gif.alt = "";
         gif.style.height = "10rem";
 
         console.log(card);
@@ -109,12 +124,24 @@ function getGif(name, card) {
 
     })
 }
-search.value = "";
-const search = document.getElementById("search");
-const div = document.createElement("div");
-div.id = "apiStuff";
-document.getElementById("apiStuff").replaceWith(div);
+
+// resets all fields and fetches
+function clear() {
+    search.value = "";
+    div.id = "apiStuff";
+    document.getElementById("apiStuff").replaceWith(div);
+}
+
+// make first API call
 search.addEventListener("change", function(e) {
     getArticles(search.value);
     e.preventDefault();
 });
+
+// functionality for clear button
+document.getElementById("clear").addEventListener("click", function (e) {
+    clear();
+});
+
+// on page load (refresh dynamic elements)
+clear()
