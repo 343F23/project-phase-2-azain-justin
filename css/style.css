@@ -1,3 +1,4 @@
+
 /* Affects the spacing on each page and the JMU-ified gradient pattern */
 body {
     display: flex;
@@ -145,3 +146,47 @@ a{
     color: purple;
     font-weight: 600;
 }
+
+
+
+#spectrum {
+    width:80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+#storageStuff {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+#graphButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.response {
+    margin-top: 50px;
+}
+.results>p {
+    display: block;
+}
+
+@media only screen and (max-width: 800px) {
+    /* For mobile phones: */
+    .response {
+        display: flex;
+        flex-direction: column;
+    }
+  }
+  @media only screen and (min-width: 801px) {
+    /* For computer screens: */
+    .response {
+        display: flex;
+        flex-direction: row;
+    }
+  }

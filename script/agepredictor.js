@@ -1,6 +1,6 @@
 // constants for html elements
 const form = document.querySelector('.form');
-const scatter = document.getElementById("scatter");
+let scatter = document.getElementById("scatter");
 const resultScreen = document.querySelector('.resultScreen');
 const clear = document.getElementById("clear");
 const graph = document.getElementById("graph");
@@ -257,10 +257,15 @@ form.addEventListener('submit', (ev) => {
 // toggle graph visibility
 graph.addEventListener("click", function (ev) {
     if (toggle) {
+        // replaces div so page is the correct size, with no space at the bottom
+        let newScatter = document.createElement("div");
+        newScatter.id = "scatter";
+        scatter.replaceWith(newScatter);
+        scatter = document.getElementById("scatter");
         scatter.style.height = "0px";
-
         clear.style.visibility = "hidden";
         scatter.style.visibility = "hidden";
+
         toggle = false;
         return;
     }

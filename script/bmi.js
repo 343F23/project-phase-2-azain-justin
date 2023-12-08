@@ -136,8 +136,13 @@ clear.style.visibility = "hidden";
 
 // create and show graph
 graph.addEventListener("click", function (ev) {
-    if (localStorage.length == 0) return;
     if (toggle) {
+        // replaces div so page is the correct size, with no space at the bottom
+        let newScatter = document.createElement("div");
+        newScatter.id = "scatter";
+        scatter.replaceWith(newScatter);
+        scatter = document.getElementById("scatter");
+        
         scatter.style.height = "0px";
 
         clear.style.visibility = "hidden";
