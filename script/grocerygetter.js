@@ -48,7 +48,7 @@ function getArticles(search) {
             button.classList.add("card_button");
 
             card.style.width = "18rem";
-            body.style.height = "70px";
+            body.style.height = "70\px";
             img.style.height = "10rem";
             gif.style.height = "10rem";
 
@@ -108,7 +108,7 @@ function getArticles(search) {
 // 2nd api call: searches giphy for a gif with the food name and replaces the 
 // image with a bootstrap card
 function getGif(name, card) {
-    const url = 'http://api.giphy.com/v1/gifs/translate?rating=g&s=' + name + '&api_key=u1gkCum5AcQOtATyb6idz3lww8hJ4ZY2';
+    const url = 'https://api.giphy.com/v1/gifs/translate?rating=g&s=' + name + '&api_key=u1gkCum5AcQOtATyb6idz3lww8hJ4ZY2';
     const response = fetch(url)
     .then ((response) => response.json())
     .then(data => {
